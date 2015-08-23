@@ -60,7 +60,7 @@ $(document).ready(function() {
             $("#about .section-heading span").fadeIn();
             $("#about .section-heading span").animate({
                 opacity: 1,
-                top: '-30%'
+                top: '-55%'
             });
         }
 
@@ -73,7 +73,7 @@ $(document).ready(function() {
             $("#services .section-heading span").fadeIn();
             $("#services .section-heading span").animate({
                 opacity: 1,
-                top: '-30%'
+                top: '-55%'
             });
         }
 
@@ -94,7 +94,7 @@ $(document).ready(function() {
             $("#portfolio .section-heading span").fadeIn();
             $("#portfolio .section-heading span").animate({
                 opacity: 1,
-                top: '-30%'
+                top: '-55%'
             });
         }
 

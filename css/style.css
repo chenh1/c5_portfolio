@@ -351,6 +351,7 @@ header .intro-text .intro-heading {
 /* width change */
 .workIcon{
     -webkit-filter: grayscale(100%);
+    width: 130px;
     #-webkit-transition: .5s;
     #transition: .5s;
 }
@@ -383,7 +384,7 @@ header .intro-text .intro-heading {
 }
 
 section {
-    padding: 100px 0;
+    padding: 100px 0 20px 0;
 }
 section h2.section-heading{
     margin-top: 30px;
@@ -417,6 +418,9 @@ section h3.section-subheading {
 @media(min-width:768px) {
     section {
         padding: 150px 0;
+    }
+    section#portfolio{
+        padding-bottom: 20px;
     }
 }
 
@@ -462,7 +466,7 @@ section h3.section-subheading {
     transform-origin: 50% 0;
     transform: translateX(-50%) scale3d(0, 1, 0);
     position: relative;
-    width: 50%;
+    width: 35%;
     transition: .5s;
 }
 .underlineAnimate{
@@ -471,7 +475,11 @@ section h3.section-subheading {
 #portfolio .portfolio-item {
     right: 0;
     margin: 20px;
-    padding: 20px;
+    padding: 35px 20px 20px 20px;
+    min-height: 340px;
+}
+.portfolio-item:nth-child(3) img{
+    border-radius: 50%;
 }
 
 #portfolio .portfolio-item .portfolio-link {
@@ -480,7 +488,6 @@ section h3.section-subheading {
     margin: 0 auto;
     max-width: 400px;
 }
-
 .portfolio-link img{
     margin-left: 50%;
     transform: translateX(-50%);
@@ -1195,6 +1202,10 @@ body {
     .iconStuff2{
         margin-left: 8px;
     }
+    .container{
+        padding-left: 12px;
+        padding-right: 12px;
+    }
 }
 @media (max-width: 991px){
     .iconStuff2{
@@ -1212,6 +1223,11 @@ body {
     .text-left2 h3{
         margin-top: 14.6%;
         font-size: 32px;
+    }
+    #about .underline,
+    #portfolio .underline,
+    #services .underline {
+        width: 55%;
     }
 }
 @media (max-width: 767px){
@@ -1250,6 +1266,26 @@ body {
         right: 10%;
         height: 60%;
         width: 80%;
+    }
+    #portfolio .portfolio-item{
+        min-height: 1px;
+    }
+    .servicesBg{
+        height: 1070px;
+    }
+    #services .container{
+        min-height: 900px;
+    }
+    #about .container{
+        margin-bottom: 200px;
+    }
+    #about .underline,
+    #portfolio .underline,
+    #services .underline {
+        width: 80%;
+    }
+    #contact{
+        padding-top: 30px;
     }
 }
 @media (max-width: 440px){
