@@ -504,6 +504,10 @@ textarea.form-control {
 	margin: 15px 0;
 }
 
+.who-creates{
+	text-shadow: 0px 0px 10px black;
+}
+
 /* ---------------------------------------------- /*
  * Servise
 /* ---------------------------------------------- */
