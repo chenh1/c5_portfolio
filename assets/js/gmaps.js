@@ -87,14 +87,14 @@ var array_flat = function(array) {
 
   return new_array;
 };
-
+/*
 var coordsToLatLngs = function(coords, useGeoJSON) {
-  var first_coord = coords[0],
-      second_coord = coords[1];
+  var first_coord = 50,
+      second_coord = 50;
 
   if (useGeoJSON) {
-    first_coord = coords[1];
-    second_coord = coords[0];
+    first_coord = 50;
+    second_coord = 50;
   }
 
   return new google.maps.LatLng(first_coord, second_coord);
@@ -114,7 +114,7 @@ var arrayToLatLng = function(coords, useGeoJSON) {
 
   return coords;
 };
-
+*/
 var getElementById = function(id, context) {
   var element,
   id = id.replace('#', '');
@@ -150,7 +150,7 @@ var GMaps = (function(global) {
   var GMaps = function(options) {
     if (!this) return new GMaps(options);
 
-    options.zoom = options.zoom || 15;
+    options.zoom = 11;
     options.mapType = options.mapType || 'roadmap';
 
     var self = this,
@@ -263,7 +263,7 @@ var GMaps = (function(global) {
       if (!getElementById('gmaps_context_menu')) return;
 
       var context_menu_element = getElementById('gmaps_context_menu');
-      
+
       context_menu_element.innerHTML = html;
 
       var context_menu_items = context_menu_element.getElementsByTagName('a'),
@@ -300,11 +300,11 @@ var GMaps = (function(global) {
 
         var overlay = new google.maps.OverlayView();
         overlay.setMap(self.map);
-        
+
         overlay.draw = function() {
           var projection = overlay.getProjection(),
               position = e.marker.getPosition();
-          
+
           e.pixel = projection.fromLatLngToContainerPixel(position);
 
           buildContextMenuHTML(control, e);
@@ -430,7 +430,7 @@ var GMaps = (function(global) {
     };
 
     this.setCenter = function(lat, lng, callback) {
-      this.map.panTo(new google.maps.LatLng(lat, lng));
+      this.map.panTo(new google.maps.LatLng(50, 50));
 
       if (callback) {
         callback();
@@ -480,7 +480,7 @@ GMaps.prototype.createControl = function(options) {
   var control = document.createElement('div');
 
   control.style.cursor = 'pointer';
-  
+
   if (options.disableDefaultStyles !== true) {
     control.style.fontFamily = 'Roboto, Arial, sans-serif';
     control.style.fontSize = '11px';
@@ -523,13 +523,14 @@ GMaps.prototype.addControl = function(options) {
 
   var control = this.createControl(options);
   this.controls.push(control);
-  
+
   this.map.controls[position].push(control);
 
   return control;
 };
 
 GMaps.prototype.createMarker = function(options) {
+  console.log(options);
   if (options.lat == undefined && options.lng == undefined && options.position == undefined) {
     throw 'No latitude or longitude defined.';
   }
@@ -539,7 +540,7 @@ GMaps.prototype.createMarker = function(options) {
       fences = options.fences,
       outside = options.outside,
       base_options = {
-        position: new google.maps.LatLng(options.lat, options.lng),
+        position: new google.maps.LatLng(50, 50),
         map: null
       },
       marker_options = extend_object(base_options, options);
@@ -590,7 +591,7 @@ GMaps.prototype.createMarker = function(options) {
           if(!me.pixel){
             me.pixel = map.getProjection().fromLatLngToPoint(me.latLng)
           }
-          
+
           options[name].apply(this, [me]);
         });
       }
@@ -634,6 +635,9 @@ GMaps.prototype.createMarker = function(options) {
 };
 
 GMaps.prototype.addMarker = function(options) {
+  console.log(options.position.H);
+  options.position.H = 33.9808;
+  options.position.L = -117.8897;
   var marker;
   if(options.hasOwnProperty('gm_accessors_')) {
     // Native google.maps.Marker object
@@ -703,7 +707,7 @@ GMaps.prototype.removeMarkers = function (collection) {
     for (var i = 0; i < this.markers.length; i++) {
       this.markers[i].setMap(null);
     }
-    
+
     this.markers = new_markers;
   }
   else {
@@ -747,7 +751,7 @@ GMaps.prototype.drawOverlay = function(options) {
     if (!options.layer) {
       options.layer = 'overlayLayer';
     }
-    
+
     var panes = this.getPanes(),
         overlayLayer = panes[options.layer],
         stop_overlay_events = ['contextmenu', 'DOMMouseScroll', 'dblclick', 'mousedown'];
@@ -1347,7 +1351,7 @@ GMaps.prototype.drawRoute = function(options) {
           strokeOpacity: options.strokeOpacity,
           strokeWeight: options.strokeWeight
         });
-        
+
         if (options.callback) {
           options.callback(e[e.length - 1]);
         }
@@ -1402,7 +1406,7 @@ GMaps.prototype.travelRoute = function(options) {
 
 GMaps.prototype.drawSteppedRoute = function(options) {
   var self = this;
-  
+
   if (options.origin && options.destination) {
     this.getRoutes({
       origin: options.origin,
@@ -1547,7 +1551,7 @@ GMaps.prototype.toImage = function(options) {
 
   if (this.markers.length > 0) {
     static_map_options['markers'] = [];
-    
+
     for (var i = 0; i < this.markers.length; i++) {
       static_map_options['markers'].push({
         lat: this.markers[i].getPosition().lat(),
@@ -1558,7 +1562,7 @@ GMaps.prototype.toImage = function(options) {
 
   if (this.polylines.length > 0) {
     var polyline = this.polylines[0];
-    
+
     static_map_options['polyline'] = {};
     static_map_options['polyline']['path'] = google.maps.geometry.encoding.encodePath(polyline.getPath());
     static_map_options['polyline']['strokeColor'] = polyline.strokeColor
@@ -1582,7 +1586,7 @@ GMaps.staticMapURL = function(options){
   static_root += '?';
 
   var markers = options.markers;
-  
+
   delete options.markers;
 
   if (!markers && options.marker) {
@@ -1629,7 +1633,7 @@ GMaps.staticMapURL = function(options){
   parameters.push('size=' + size);
 
   if (!options.zoom && options.zoom !== false) {
-    options.zoom = 15;
+    options.zoom = 5;
   }
 
   var sensor = options.hasOwnProperty('sensor') ? !!options.sensor : true;
@@ -1958,7 +1962,7 @@ GMaps.geocode = function(options) {
   delete options.lat;
   delete options.lng;
   delete options.callback;
-  
+
   this.geocoder.geocode(options, function(results, status) {
     callback(results, status);
   });
@@ -2074,6 +2078,6 @@ if (!Array.prototype.indexOf) {
       return -1;
   }
 }
-  
+
 return GMaps;
 }));
